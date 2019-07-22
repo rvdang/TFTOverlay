@@ -1,0 +1,25 @@
+{
+  "name": "tftoverlay",
+  "version": "1.0.0",
+  "description": "A simple TFT Overlay to display item combinations",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rvdang/TFTOverlay.git"
+  },
+  "keywords": [
+    "TFT"
+  ],
+  "author": "rvdang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rvdang/TFTOverlay/issues"
+  },
+  "homepage": "https://github.com/rvdang/TFTOverlay#readme",
+  "dependencies": {
+    "electron": "^5.0.7"
+  }
+}
