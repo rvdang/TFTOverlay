@@ -6,7 +6,7 @@ let mainWindow
 function createWindow () {
   mainWindow = new BrowserWindow({
     width: 369,
-    height: 689,
+    height: 704,
     transparent: true,
     frame: false,
     resizable: false,
@@ -17,6 +17,8 @@ function createWindow () {
   })
 
   mainWindow.loadFile('index.html')
+
+  mainWindow.setMaximizable(false)
 
   mainWindow.on('closed', function () {
     mainWindow = null

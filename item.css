@@ -1,5 +1,4 @@
 body {
-    -webkit-app-region: drag;
     -webkit-user-select: none;
     background-image: url("./assets/item-background.png");
     background-repeat: no-repeat;
@@ -8,52 +7,72 @@ body {
     overflow: hidden;
 }
 
-.close, .inc, .dec {
-    width: 10px;
-    height: 10px;
-    opacity: 0.3;
-}
-
-.close:hover, .inc:hover, .dec:hover {
-    opacity: 1;
-}
-
-.close:before, .close:after, .inc:before, .inc:after, .dec:before, .dec:after {
-    content: ' ';
-    height: 10px;
-    width: 2px;
-    background-color: #ffffff;
-}
-
-.close {
-    position: absolute;
-    right: 20px;
-    top: 10px;
-}
-
-.close:before {
-    position: absolute;
-    left: 15px;
-    transform: rotate(45deg);
-}
-.close:after {
-    position: absolute;
-    left: 15px;
-    transform: rotate(-45deg);
-}
-
-.inc:before, .dec:before, .dec:after {
-    transform: rotate(90deg);
-}
 .itemcounterimage{
     height: 40px;
     width: 40px;
 }
 
 #closebreak {
-    font-size: 17px;
+    font-size: 20px;
 }
 
-hr {
-    margin-left: 0;
+hr{
+    margin-left: 0px;
+}
+
+#maximize-btn,#minimize-btn,#close-btn,#move-btn{
+    position: absolute;
+    top: 0px;
+    height: 14px;
+    width: 14px;
+    cursor: pointer;
+}
+
+#minimize-btn{
+    right: 25px;
+}
+
+#maximize-btn{
+    right: 45px;
+}
+
+#close-btn{
+    right:6px;
+}
+
+#move-btn{
+    right:350px;
+    -webkit-app-region: drag;
+    cursor: all-scroll;
+}
+table{
+    padding: 0;
+    margin: 0;
+}
+/* td {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+} */
+table{
+    border-spacing: 2px 0;
+    /* border-collapse: collapse; */
+}
+
+.incrementbutton,.decrementbutton{
+    cursor: pointer;
+}
+
+p{
+    padding: 0;
+}
+
+div{
+    /* display: inline-block; */
+    float: left;
+}
+
+td {
+    width: 40px;
 }
