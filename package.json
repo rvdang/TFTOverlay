@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/rvdang/TFTOverlay#readme",
   "dependencies": {
-    "electron": "^5.0.7"
+    "electron": "^5.0.7",
+    "prettier": "^1.18.2"
   }
 }

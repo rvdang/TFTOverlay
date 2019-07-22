@@ -1,0 +1,51 @@
+body {
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+    background-image: url("./assets/item-background.png");
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.close, .inc, .dec {
+    width: 15px;
+    height: 15px;
+    opacity: 0.3;
+}
+
+.close:hover, .inc:hover, .dec:hover {
+    opacity: 1;
+}
+
+.close:before, .close:after, .inc:before, .inc:after, .dec:before, .dec:after {
+    content: ' ';
+    height: 15px;
+    width: 2px;
+    background-color: #ffffff;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.close:before {
+    position: absolute;
+    left: 15px;
+    transform: rotate(45deg);
+}
+.close:after {
+    position: absolute;
+    left: 15px;
+    transform: rotate(-45deg);
+}
+
+.inc:before, .dec:before, .dec:after {
+    transform: rotate(90deg);
+}
+.itemcounterimage{
+    height: 70px;
+    width: 70px;
+}
