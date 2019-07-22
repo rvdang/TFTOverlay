@@ -9,8 +9,8 @@ body {
 }
 
 .close, .inc, .dec {
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     opacity: 0.3;
 }
 
@@ -20,7 +20,7 @@ body {
 
 .close:before, .close:after, .inc:before, .inc:after, .dec:before, .dec:after {
     content: ' ';
-    height: 15px;
+    height: 10px;
     width: 2px;
     background-color: #ffffff;
 }
@@ -46,6 +46,14 @@ body {
     transform: rotate(90deg);
 }
 .itemcounterimage{
-    height: 70px;
-    width: 70px;
+    height: 40px;
+    width: 40px;
+}
+
+#closebreak {
+    font-size: 17px;
+}
+
+hr {
+    margin-left: 0;
 }
