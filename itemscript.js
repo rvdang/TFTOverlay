@@ -5,7 +5,16 @@ const page = document.getElementById("page")
 // 1x8 array of half-item counts
 const inventory = [0,0,0,0,0,0,0,0];
 // 8x8 array of craftable items
-const itemtable = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
+const itemtable = [
+  [0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0]
+];
 
 document.oncontextmenu = new Function("return false;");
 
@@ -42,7 +51,7 @@ function decrement(button){
     return;
   }
   const index = Number(button.parentElement.id)
-  decrementtable(index, inventory, compItems)
+  decrementtable(index, inventory, itemtable)
   alert(inventory)
   alert(itemtable)
   button.parentElement.childNodes[2].nodeValue = String(currentval - 1)
