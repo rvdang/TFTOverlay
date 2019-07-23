@@ -6,33 +6,68 @@
     <link rel="stylesheet" href="item.css">
   </head>
   <body id="page">
-    <img id="close-btn" draggable="false" onclick="minimize();" src="./assets/close.png">
-    <img id="minimize-btn" draggable="false" onclick="minimize();" src="./assets/minus.png">
-    <img id="maximize-btn" draggable="false" onclick="maximize();" src="./assets/plus.png">
+    <img id="close-btn" src="./assets/close.png">
+    <img id="minimize-btn" src="./assets/minus.png">
     <img id="move-btn" src="./assets/movearrows.png">
     <p id="closebreak"></p>
     <table id="countertable">
       <tr>
-        <td><img class="itemcounterimage" draggable="false" src="./assets/bf.png"></td>
-        <td><img class="itemcounterimage" draggable="false" src="./assets/rod.png"></td>
-        <td><img class="itemcounterimage" draggable="false" src="./assets/recurve.png"></td>
-        <td><img class="itemcounterimage" draggable="false" src="./assets/tear.png"></td>
-        <td><img class="itemcounterimage" draggable="false" src="./assets/vest.png"></td>
-        <td><img class="itemcounterimage" draggable="false" src="./assets/cloak.png"></td>
-        <td><img class="itemcounterimage" draggable="false" src="./assets/giants belt.png"></td>
-        <td><img class="itemcounterimage" draggable="false" src="./assets/spatula.png"></td>
+        <td><img class="itemcounterimage" src="./assets/bf.png"></td>
+        <td><img class="itemcounterimage" src="./assets/rod.png"></td>
+        <td><img class="itemcounterimage" src="./assets/recurve.png"></td>
+        <td><img class="itemcounterimage" src="./assets/tear.png"></td>
+        <td><img class="itemcounterimage" src="./assets/vest.png"></td>
+        <td><img class="itemcounterimage" src="./assets/cloak.png"></td>
+        <td><img class="itemcounterimage" src="./assets/giants belt.png"></td>
+        <td><img class="itemcounterimage" src="./assets/spatula.png"></td>
       </tr>
       <tr>
           <td>
-            <div>
-              <img class="decrementbutton" onclick="" height="12px" width="12px" src="./assets/minus-button.png">
-              <!-- <p>0</p> -->
-              <img class="incrementbutton" onclick="" height="12px" width="12px" src="./assets/add-button.png">
-            </div>
+            <span>
+              <img class="decrementbutton" onclick="decrement(this)">0<img class="incrementbutton" onclick="increment(this)">
+            </span>
           </td>
+          <td>
+            <span>
+              <img class="decrementbutton" onclick="decrement(this)">0<img class="incrementbutton" onclick="increment(this)">
+            </span>
+          </td>
+          <td>
+            <span>
+              <img class="decrementbutton" onclick="decrement(this)">0<img class="incrementbutton" onclick="increment(this)">
+            </span>
+          </td>
+          <td>
+            <span>
+              <img class="decrementbutton" onclick="decrement(this)">0<img class="incrementbutton" onclick="increment(this)">
+            </span>
+          </td>
+          <td>
+            <span>
+              <img class="decrementbutton" onclick="decrement(this)">0<img class="incrementbutton" onclick="increment(this)">
+            </span>
+          </td>
+          <td>
+            <span>
+              <img class="decrementbutton" onclick="decrement(this)">0<img class="incrementbutton" onclick="increment(this)">
+            </span>
+          </td>
+          <td>
+            <span>
+              <img class="decrementbutton" onclick="decrement(this)">0<img class="incrementbutton" onclick="increment(this)">
+            </span>
+          </td>
+          <td>
+            <span>
+              <img class="decrementbutton" onclick="decrement(this)">0<img class="incrementbutton" onclick="increment(this)">
+            </span>
+          </td>
+          
         </tr>
     </table>
-    <hr id="itembreak" size=3 noshade color="#E1C368" width="352px">
+    <div id="pagebreak">
+      <hr id="itembreak" size=3>
+    </div>
     <script src="itemscript.js"></script>
   </body>
 </html>

@@ -4,36 +4,43 @@ body {
     background-repeat: no-repeat;
     width: 100%;
     height: 100%;
+    align-self: left;
     overflow: hidden;
+    align-content: center;
 }
 
 .itemcounterimage{
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
 }
 
 #closebreak {
-    font-size: 20px;
+    font-size: 30px;
 }
 
 hr{
-    margin-left: 0px;
+    margin: 0px;
+    margin-top: 4px;
+    padding-left: 0px;
+    width: 433px;
+    background-color:  #E1C368;
+    border-color:  #E1C368;
 }
 
-#maximize-btn,#minimize-btn,#close-btn,#move-btn{
+#minimize-btn,#close-btn,#move-btn{
     position: absolute;
     top: 0px;
-    height: 14px;
-    width: 14px;
+    height: 19px;
+    width: 19px;
     cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
 }
 
 #minimize-btn{
-    right: 25px;
-}
-
-#maximize-btn{
-    right: 45px;
+    right: 30px;
 }
 
 #close-btn{
@@ -41,38 +48,54 @@ hr{
 }
 
 #move-btn{
-    right:350px;
+    right:430px;
     -webkit-app-region: drag;
     cursor: all-scroll;
 }
 table{
     padding: 0;
     margin: 0;
+    transform: translate(-1px, 0)
 }
-/* td {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-} */
 table{
+    left: 50%;
+    transform: translate(1px, 0);
     border-spacing: 2px 0;
-    /* border-collapse: collapse; */
 }
 
 .incrementbutton,.decrementbutton{
     cursor: pointer;
+    height: 15px;
+    widows: 15px;
+}
+.decrementbutton{
+    padding-right: 4px;
+    padding-left: 0;
+    content: url("./assets/minus-button.png");
 }
 
-p{
+.incrementbutton{
+    padding-left: 4px;
+    padding-right: 0;
+    content: url("./assets/add-button.png");
+}
+
+span{
+    /* width: 50px; */
+    display: inline-block;
+    color: white;
+    font-size: 16pt;
+    /* left: 50%; */
+    width: 50px;
+    margin: 0;
     padding: 0;
-}
-
-div{
-    /* display: inline-block; */
-    float: left;
+    text-align: center;
+    font-family: "Segoe UI",
 }
 
 td {
-    width: 40px;
+    text-align: center;
+    width: 50px;
+    /* border: 1px solid white; */
+    margin: 0;
 }

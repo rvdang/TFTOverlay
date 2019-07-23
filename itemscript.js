@@ -1,38 +1,50 @@
 const remote = require('electron').remote;
 
+const page = document.getElementById("page")
+
 document.oncontextmenu = new Function("return false;");
 
 document.getElementById("close-btn").addEventListener("click", function (e) {
-    var window = remote.getCurrentWindow();
-    window.close();
+  let window = remote.getCurrentWindow();  
+  window.close();
 }); 
 
-function minimize(){
-    if (!document.getElementById("itembreak")){
-        return
-    }
-    var window = remote.getCurrentWindow();
-    window.setSize(369, 93, false);
-    const page = document.getElementById("page")
-    page.style.backgroundImage = 'url("./assets/minimized-items.png")'
-    page.removeChild(document.getElementById("itembreak"))
+document.getElementById("minimize-btn").addEventListener("click", function (e) {
+  let window = remote.getCurrentWindow();
+  const itembreak = document.getElementById("itembreak")
+  const pagebreak = document.getElementById("pagebreak")
+  if (!itembreak){
+    window.setContentSize(450, 709, true);
+
+    page.style.backgroundImage = 'url("./assets/item-background.png")'
+
+    const newitembreak = document.createElement('hr');
+    newitembreak.id = "itembreak"
+    newitembreak.size = 3
+    pagebreak.appendChild(newitembreak)
+    return
+  }
+  window.setContentSize(450, 120, true);
+
+  page.style.backgroundImage = 'url("./assets/minimized-items.png")'
+  pagebreak.removeChild(itembreak)
+}); 
+
+function decrement(button){
+  const currentval = Number(button.parentElement.childNodes[2].nodeValue)
+  if (currentval === 0){
+    return;
+  }
+  button.parentElement.childNodes[2].nodeValue = String(currentval - 1)
 }
 
-function maximize(){
-    if (document.getElementById("itembreak")){
-        return
-    }
-    var window = remote.getCurrentWindow();
-    window.setSize(369, 704, false);
-    const page = document.getElementById("page")
-    page.style.backgroundImage = 'url("./assets/item-background.png")'
-    const pagebreak = document.createElement('hr');
-    pagebreak.id = "itembreak"
-    pagebreak.size = 3
-    pagebreak.noShade = true
-    pagebreak.color = "#E1C368"
-    pagebreak.width = "352px"
-    page.appendChild(pagebreak)
+function increment(button){
+  const currentval = Number(button.parentElement.childNodes[2].nodeValue)
+  
+  if (currentval === 9){
+    return;
+  }
+  button.parentElement.childNodes[2].nodeValue = String(currentval + 1)
 }
 
 // 1x8 array of half-item counts
@@ -52,8 +64,13 @@ function reset(currInv, allitems) {
 // takes in an item index to increment, your current 
 // inventory (1x8 array of half-items) and the 8x8 table of 
 // craftable items and updates your inventory and table accordingly
+<<<<<<< HEAD
 function increment(item, currInv, compItems) {
   for (let i = 0; i < item; i++) {
+=======
+function incrementtable(item, currInv, compItems) {
+  for (i = 0; i < item; i++) {
+>>>>>>> e8a9e98c73715c7b3dd861e02301a6850ca129f6
     if (currInv[i] == 0) {
       compItems[item][i] = -1;
     } else if (currInv[i] > compItems[i][item]) {
@@ -82,8 +99,13 @@ function increment(item, currInv, compItems) {
 // takes in an item index to decrement, your current 
 // inventory (1x8 array of half-items) and the 8x8 table of 
 // craftable items and updates your inventory and table accordingly
+<<<<<<< HEAD
 function decrement(item, currInv, compItems) {
   for (let i = 0; i < item; i++) {
+=======
+function decrementtable(item, currInv, compItems) {
+  for (i = 0; i < item; i++) {
+>>>>>>> e8a9e98c73715c7b3dd861e02301a6850ca129f6
     if (currInv[item] == 1 && compItems[item][i] == 1) {
       compItems[item][i] = -1;
     } else if (currInv[item] == 1 && compItems[item][i] == -1) {
@@ -112,13 +134,3 @@ function decrement(item, currInv, compItems) {
   currInv[item] -= 1
   return [currInv, compItems]
 }
-
-
-// document.getElementById("minimize-btn").addEventListener("click", function (e) {
-//     var window = remote.getCurrentWindow();
-//     // window.setSize(369, 78, true);
-//     // alert(document.getElementById("page").style.backgroundImage);
-//     const page = document.getElementById("page")
-//     page.style.backgroundImage = 'url("./assets/minimized-items.png")'
-//     page.removeChild(document.getElementById("itembreak"))
-// }); 
