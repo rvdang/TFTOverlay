@@ -2,6 +2,11 @@ const remote = require('electron').remote;
 
 const page = document.getElementById("page")
 
+// 1x8 array of half-item counts
+const inventory = [0,0,0,0,0,0,0,0];
+// 8x8 array of craftable items
+const itemtable = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
+
 document.oncontextmenu = new Function("return false;");
 
 document.getElementById("close-btn").addEventListener("click", function (e) {
@@ -36,6 +41,10 @@ function decrement(button){
   if (currentval === 0){
     return;
   }
+  const index = Number(button.parentElement.id)
+  decrementtable(index, inventory, compItems)
+  alert(inventory)
+  alert(itemtable)
   button.parentElement.childNodes[2].nodeValue = String(currentval - 1)
 }
 
@@ -45,13 +54,13 @@ function increment(button){
   if (currentval === 9){
     return;
   }
+  const index = Number(button.parentElement.id)
+  incrementtable(index, inventory, itemtable)
+  alert(inventory)
+  alert(itemtable)
   button.parentElement.childNodes[2].nodeValue = String(currentval + 1)
 }
 
-// 1x8 array of half-item counts
-var inventory;
-// 8x8 array of craftable items
-var allitems;
 
 // takes in your current inventory (1x8 array of half-items) 
 // and the 8x8 table of craftable items and sets their contents
@@ -89,7 +98,6 @@ function incrementtable(item, currInv, compItems) {
     }
   }
   currInv[item] += 1
-  return [currInv, allitems];
 }
 
 // takes in an item index to decrement, your current 
@@ -123,5 +131,4 @@ function decrementtable(item, currInv, compItems) {
     }
   }
   currInv[item] -= 1
-  return [currInv, compItems]
 }
