@@ -1,6 +1,6 @@
 const remote = require('electron').remote;
 
-// var window = remote.getCurrentWindow();
+const page = document.getElementById("page")
 
 document.oncontextmenu = new Function("return false;");
 
@@ -9,35 +9,26 @@ document.getElementById("close-btn").addEventListener("click", function (e) {
   window.close();
 }); 
 
-function minimize(){
-    if (!document.getElementById("itembreak")){
-        return
-    }
-    const page = document.getElementById("page")
-    page.style.height = "120px"
-    let window = remote.getCurrentWindow();
-    window.setSize(450, 120, true);
+document.getElementById("minimize-btn").addEventListener("click", function (e) {
+  let window = remote.getCurrentWindow();
+  const itembreak = document.getElementById("itembreak")
+  const pagebreak = document.getElementById("pagebreak")
+  if (!itembreak){
+    window.setContentSize(450, 709, true);
 
-    
-    page.style.backgroundImage = 'url("./assets/minimized-items.png")'
-    document.getElementById("pagebreak").removeChild(document.getElementById("itembreak"))
-}
+    page.style.backgroundImage = 'url("./assets/item-background.png")'
 
-function maximize(){
-    if (document.getElementById("itembreak")){
-      return
-    }
-    document.getElementById("page").style.height = "709px";
-    let window = remote.getCurrentWindow();
-    window.setSize(450, 709, true);
+    const newitembreak = document.createElement('hr');
+    newitembreak.id = "itembreak"
+    newitembreak.size = 3
+    pagebreak.appendChild(newitembreak)
+    return
+  }
+  window.setContentSize(450, 120, true);
 
-    document.getElementById("page").style.backgroundImage = 'url("./assets/item-background.png")'
-
-    const pagebreak = document.createElement('hr');
-    pagebreak.id = "itembreak"
-    pagebreak.size = 3
-    document.getElementById("pagebreak").appendChild(pagebreak)
-}
+  page.style.backgroundImage = 'url("./assets/minimized-items.png")'
+  pagebreak.removeChild(itembreak)
+}); 
 
 function decrement(button){
   const currentval = Number(button.parentElement.childNodes[2].nodeValue)
@@ -133,13 +124,3 @@ function decrementtable(item, currInv, compItems) {
   currInv[item] -= 1
   return [currInv, compItems]
 }
-
-
-// document.getElementById("minimize-btn").addEventListener("click", function (e) {
-//     var window = remote.getCurrentWindow();
-//     // window.setSize(369, 78, true);
-//     // alert(document.getElementById("page").style.backgroundImage);
-//     const page = document.getElementById("page")
-//     page.style.backgroundImage = 'url("./assets/minimized-items.png")'
-//     page.removeChild(document.getElementById("itembreak"))
-// }); 

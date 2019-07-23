@@ -12,6 +12,8 @@ body {
 .itemcounterimage{
     height: 50px;
     width: 50px;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
 }
 
 #closebreak {
@@ -27,20 +29,18 @@ hr{
     border-color:  #E1C368;
 }
 
-#maximize-btn,#minimize-btn,#close-btn,#move-btn{
+#minimize-btn,#close-btn,#move-btn{
     position: absolute;
     top: 0px;
     height: 19px;
     width: 19px;
     cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
 }
 
 #minimize-btn{
     right: 30px;
-}
-
-#maximize-btn{
-    right: 55px;
 }
 
 #close-btn{
