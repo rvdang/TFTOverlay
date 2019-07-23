@@ -41,6 +41,7 @@ hr{
 
 #minimize-btn{
     right: 30px;
+    content: url("./assets/minus.png");
 }
 
 #close-btn{

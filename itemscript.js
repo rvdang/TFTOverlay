@@ -13,10 +13,11 @@ document.getElementById("minimize-btn").addEventListener("click", function (e) {
   let window = remote.getCurrentWindow();
   const itembreak = document.getElementById("itembreak")
   const pagebreak = document.getElementById("pagebreak")
+  const btn = document.getElementById("minimize-btn")
   if (!itembreak){
-    window.setContentSize(450, 709, true);
-
     page.style.backgroundImage = 'url("./assets/item-background.png")'
+    window.setContentSize(450, 709);
+    btn.style.content = 'url("./assets/minus.png")'
 
     const newitembreak = document.createElement('hr');
     newitembreak.id = "itembreak"
@@ -24,8 +25,8 @@ document.getElementById("minimize-btn").addEventListener("click", function (e) {
     pagebreak.appendChild(newitembreak)
     return
   }
-  window.setContentSize(450, 120, true);
-
+  window.setContentSize(450, 120);
+  btn.style.content = 'url("./assets/plus.png")'
   page.style.backgroundImage = 'url("./assets/minimized-items.png")'
   pagebreak.removeChild(itembreak)
 }); 
