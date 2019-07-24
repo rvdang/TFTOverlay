@@ -84,14 +84,16 @@ function reset(currInv, allitems) {
 // inventory (1x8 array of half-items) and the 8x8 table of 
 // craftable items and updates your inventory and table accordingly
 function incrementtable(item, currInv, compItems) {
-  for (i = 0; i < item; i++) {
+  for (let i = 0; i < item; i++) {
     if (currInv[i] == 0) {
       compItems[item][i] = -1;
-    } else if (currInv[i] > compItems[i][item]) {
+    } else if (currInv[i] == 1) {
+      compItems[item][i] = 1;
+    } else if (currInv[i] > compItems[item][i]) {
       compItems[item][i] += 1;
     }
   }
-  for (j = item; j < 8; j++) {
+  for (let j = item; j < 8; j++) {
     if (j == item) {
       if (currInv[j] == 0) {
         compItems[j][item] = -1;
@@ -100,10 +102,15 @@ function incrementtable(item, currInv, compItems) {
       } else if (currInv[j]%2 == 1) {
         compItems[j][item] += 1
       }
-    } else if (currInv[j] == 0) {
-      compItems[j][item] = -1;
-    } else if (currInv[j] > compItems[j][item]) {
-      compItems[j][item] += 1;
+    }
+    else {
+      if (currInv[j] == 0) {
+        compItems[j][item] = -1;
+      } else if (currInv[j] == 1) {
+        compItems[j][item] = 1;
+      } else if (currInv[j] > compItems[j][item]) {
+        compItems[j][item] += 1;
+      }
     }
   }
   currInv[item] += 1
@@ -113,7 +120,7 @@ function incrementtable(item, currInv, compItems) {
 // inventory (1x8 array of half-items) and the 8x8 table of 
 // craftable items and updates your inventory and table accordingly
 function decrementtable(item, currInv, compItems) {
-  for (i = 0; i < item; i++) {
+  for (let i = 0; i < item; i++) {
     if (currInv[item] == 1 && compItems[item][i] == 1) {
       compItems[item][i] = -1;
     } else if (currInv[item] == 1 && compItems[item][i] == -1) {
@@ -122,21 +129,24 @@ function decrementtable(item, currInv, compItems) {
       compItems[item][i] -= 1;
     }
   }
-  for (j = item; j < 8; j++) {
+  for (let j = item; j < 8; j++) {
     if (j == item) {
-      if (compItems[j][item] == -1 && currInv[item] == 1) {
+      if (currInv[item] == 1) {
         compItems[j][item] = 0;
-      } else if (currInv[j] <= 2) {
+      } else if (currInv[j] == 2) {
         compItems[j][item] = -1;
       } else if (currInv[j]%2 == 0) {
         compItems[j][item] -= 1
       }
-    } else if (compItems[j][item] == -1 && currInv[item] == 1) {
-      compItems[j][item] = 0;
-    } else if (currInv[item] == 1) {
-      compItems[j][item] = -1;
-    } else if (currInv[item] == compItems[j][item]) {
-      compItems[j][item] -= 1;
+    }
+    else {
+      if (compItems[j][item] == -1 && currInv[item] == 1) {
+        compItems[j][item] = 0;
+      } else if (currInv[item] == 1 && compItems[j][item] == -1) {
+        compItems[j][item] = -1;
+      } else if (currInv[item] == compItems[j][item]) {
+        compItems[j][item] -= 1;
+      }
     }
   }
   currInv[item] -= 1
