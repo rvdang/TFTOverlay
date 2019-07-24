@@ -138,38 +138,41 @@ function reset(currInv, allitems) {
 // craftable items and updates your inventory and table accordingly
 function incrementtable(item, currInv, compItems, itemimages) {
   for (let i = 0; i < item; i++) {
-    itemimages[item][i].style.opacity = "1.0"
+    pair = itemimages[item][i]
     if (currInv[i] == 0) {
       compItems[item][i] = -1;
+      setCarousel(pair)
     } else if (currInv[i] >= 1 && currInv[item] == 0) {
       compItems[item][i] = 1;
-      itemimages[item][i].parentElement.style.opacity = "1.0"
+      setCraftable(pair)
     } else if (currInv[i] > compItems[item][i]) {
       compItems[item][i] += 1;
-      itemimages[item][i].parentElement.style.opacity = "1.0"
+      setCraftable(pair)
     }
   }
   for (let j = item; j < 8; j++) {
-    itemimages[j][item].style.opacity = "1.0"
+    pair = itemimages[j][item]
     if (j == item) {
       if (currInv[j] == 0) {
         compItems[j][item] = -1;
+        setCarousel(pair)
       } else if (currInv[j] == 1) {
         compItems[j][item] = 1;
-        itemimages[j][item].parentElement.style.opacity = "1.0"
+        setCraftable(pair)
       } else if (currInv[j] % 2 == 1) {
         compItems[j][item] += 1;
-        itemimages[j][item].parentElement.style.opacity = "1.0"
+        setCraftable(pair)
       }
     } else {
       if (currInv[j] == 0) {
         compItems[j][item] = -1;
+        setCarousel(pair)
       } else if (currInv[j] >= 1 && currInv[item] == 0) {
         compItems[j][item] = 1;
-        itemimages[j][item].parentElement.style.opacity = "1.0"
+        setCraftable(pair)
       } else if (currInv[j] > compItems[j][item]) {
         compItems[j][item] += 1;
-        itemimages[j][item].parentElement.style.opacity = "1.0"
+        setCraftable(pair)
       }
     }
   }
@@ -186,11 +189,10 @@ function decrementtable(item, currInv, compItems, itemimages) {
     const pair = itemimages[item][i]
     if (currentItemCount == 1 && pairCount >= 1) {
       compItems[item][i] = -1;
-      pair.parentElement.style.opacity = "0.4"
+      setCarousel(pair)
     } else if (currentItemCount == 1 && pairCount == -1) {
       compItems[item][i] = 0;
-      pair.style.opacity = "0.4"
-      pair.parentElement.style.opacity = "0.4"
+      setUncraftable(pair)
     } else if (currentItemCount == pairCount) {
       compItems[item][i] -= 1;
     }
@@ -201,26 +203,43 @@ function decrementtable(item, currInv, compItems, itemimages) {
     if (j == item) {
       if (currentItemCount == 1) {
         compItems[j][item] = 0;
-        pair.style.opacity = "0.4"
-        pair.parentElement.style.opacity = "0.4"
+        setUncraftable(pair)
       } else if (currInv[j] == 2) {
         compItems[j][item] = -1;
-        pair.parentElement.style.opacity = "0.4"
+        setCarousel(pair)
       } else if (currInv[j] % 2 == 0) {
         compItems[j][item] -= 1;
       }
     } else {
       if (currentItemCount == 1 && pairCount >= 1) {
         compItems[j][item] = -1;
-        pair.parentElement.style.opacity = "0.4"
+        setCarousel(pair)
       } else if (currentItemCount == 1 && pairCount == -1) {
         compItems[j][item] = 0;
-        pair.style.opacity = "0.4"
-        pair.parentElement.style.opacity = "0.4"
+        setUncraftable(pair)
       } else if (currentItemCount == pairCount) {
         compItems[j][item] -= 1;
       }
     }
   }
   currInv[item] -= 1;
+}
+
+
+function setCraftable(pair){
+  pair.style.opacity = "1.0"
+  pair.parentElement.style.opacity = "1.0"
+  pair.parentElement.style.border = "1px solid #ffbf00"
+}
+
+function setCarousel(pair){
+  pair.style.opacity = "1.0"
+  pair.parentElement.style.opacity = "0.5"
+  pair.parentElement.style.border = "1px solid #E1C368"
+}
+
+function setUncraftable(pair){
+  pair.style.opacity = "0.4"
+  pair.parentElement.style.opacity = "0.3"
+  pair.parentElement.style.border = "1px solid #E1C368"
 }
