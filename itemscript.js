@@ -184,7 +184,7 @@ function decrementtable(item, currInv, compItems, itemimages) {
   for (let i = 0; i < item; i++) {
     const pairCount = compItems[item][i];
     const pair = itemimages[item][i]
-    if (currentItemCount == 1 && pairCount == 1) {
+    if (currentItemCount == 1 && pairCount >= 1) {
       compItems[item][i] = -1;
       pair.parentElement.style.opacity = "0.4"
     } else if (currentItemCount == 1 && pairCount == -1) {
@@ -210,12 +210,12 @@ function decrementtable(item, currInv, compItems, itemimages) {
         compItems[j][item] -= 1;
       }
     } else {
-      if (pairCount == -1 && currentItemCount == 1) {
-        compItems[j][item] = 0;
-        pair.style.opacity = "0.4"
+      if (currentItemCount == 1 && pairCount >= 1) {
+        compItems[j][item] = -1;
         pair.parentElement.style.opacity = "0.4"
       } else if (currentItemCount == 1 && pairCount == -1) {
-        compItems[j][item] = -1;
+        compItems[j][item] = 0;
+        pair.style.opacity = "0.4"
         pair.parentElement.style.opacity = "0.4"
       } else if (currentItemCount == pairCount) {
         compItems[j][item] -= 1;
