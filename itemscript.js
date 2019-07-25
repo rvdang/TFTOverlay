@@ -1,7 +1,219 @@
-var $ = require('jquery')
+var $ = require("jquery");
 const remote = require("electron").remote;
 
 const page = document.getElementById("page");
+
+document.oncontextmenu = new Function("return false;");
+
+document.getElementById("close-btn").addEventListener("click", function(e) {
+  let window = remote.getCurrentWindow();
+  window.close();
+});
+
+document.getElementById("minimize-btn").addEventListener("click", function(e) {
+  let window = remote.getCurrentWindow();
+  const itembreak = document.getElementById("itembreak");
+  const pagebreak = document.getElementById("pagebreak");
+  const btn = document.getElementById("minimize-btn");
+  if (!itembreak) {
+    page.style.backgroundImage = 'url("./assets/item-background.png")';
+    window.setContentSize(450, 709);
+    btn.style.content = 'url("./assets/minus.png")';
+
+    const newitembreak = document.createElement("hr");
+    newitembreak.id = "itembreak";
+    newitembreak.size = 3;
+    pagebreak.appendChild(newitembreak);
+    return;
+  }
+  window.setContentSize(450, 120);
+  btn.style.content = 'url("./assets/plus.png")';
+  page.style.backgroundImage = 'url("./assets/minimized-items.png")';
+  pagebreak.removeChild(itembreak);
+});
+
+function decrement(button) {
+  const currentval = Number(button.parentElement.childNodes[2].nodeValue);
+  if (currentval === 0) {
+    return;
+  }
+  const index = Number(button.parentElement.id);
+  decrementtable(index, inventory, itemtable, itemimages, baseitemimages);
+  button.parentElement.childNodes[2].nodeValue = String(currentval - 1);
+}
+
+function increment(button) {
+  const currentval = Number(button.parentElement.childNodes[2].nodeValue);
+
+  if (currentval === 9) {
+    return;
+  }
+  const index = Number(button.parentElement.id);
+  incrementtable(index, inventory, itemtable, itemimages, baseitemimages);
+  button.parentElement.childNodes[2].nodeValue = String(currentval + 1);
+}
+
+function reset(currInv, allitems) {
+  currInv = new Array(8).fill(0);
+  allitems = Array.from(Array(8), _ => Array(8).fill(0));
+  return [currInv, allitems];
+}
+
+function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
+  setAllCraftable(baseitemimages[item]);
+  for (let i = 0; i < item; i++) {
+    pair = itemimages[item][i];
+    if (currInv[i] == 0) {
+      compItems[item][i] = -1;
+      setCarousel(pair);
+    } else if (currInv[i] >= 1 && currInv[item] == 0) {
+      compItems[item][i] = 1;
+      setCraftable(pair);
+    } else if (currInv[i] > compItems[item][i]) {
+      compItems[item][i] += 1;
+      setCraftable(pair);
+    }
+  }
+  for (let j = item; j < 8; j++) {
+    pair = itemimages[j][item];
+    if (j == item) {
+      if (currInv[j] == 0) {
+        compItems[j][item] = -1;
+        setCarousel(pair);
+      } else if (currInv[j] == 1) {
+        compItems[j][item] = 1;
+        setCraftable(pair);
+      } else if (currInv[j] % 2 == 1) {
+        compItems[j][item] += 1;
+        setCraftable(pair);
+      }
+    } else {
+      if (currInv[j] == 0) {
+        compItems[j][item] = -1;
+        setCarousel(pair);
+      } else if (currInv[j] >= 1 && currInv[item] == 0) {
+        compItems[j][item] = 1;
+        setCraftable(pair);
+      } else if (currInv[j] > compItems[j][item]) {
+        compItems[j][item] += 1;
+        setCraftable(pair);
+      }
+    }
+  }
+  currInv[item] += 1;
+}
+
+// takes in an item index to decrement, your current
+// inventory (1x8 array of half-items) and the 8x8 table of
+// craftable items and updates your inventory and table accordingly
+function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
+  const currentItemCount = currInv[item];
+  if (currentItemCount === 1) {
+    setAllUncraftable(baseitemimages[item]);
+  }
+  for (let i = 0; i < item; i++) {
+    const pairCount = compItems[item][i];
+    const pair = itemimages[item][i];
+    if (currentItemCount == 1 && pairCount >= 1) {
+      compItems[item][i] = -1;
+      setCarousel(pair);
+    } else if (currentItemCount == 1 && pairCount == -1) {
+      compItems[item][i] = 0;
+      setUncraftable(pair);
+    } else if (currentItemCount == pairCount) {
+      compItems[item][i] -= 1;
+    }
+  }
+  for (let j = item; j < 8; j++) {
+    const pairCount = compItems[j][item];
+    const pair = itemimages[j][item];
+    if (j == item) {
+      if (currentItemCount == 1) {
+        compItems[j][item] = 0;
+        setUncraftable(pair);
+      } else if (currInv[j] == 2) {
+        compItems[j][item] = -1;
+        setCarousel(pair);
+      } else if (currInv[j] % 2 == 0) {
+        compItems[j][item] -= 1;
+      }
+    } else {
+      if (currentItemCount == 1 && pairCount >= 1) {
+        compItems[j][item] = -1;
+        setCarousel(pair);
+      } else if (currentItemCount == 1 && pairCount == -1) {
+        compItems[j][item] = 0;
+        setUncraftable(pair);
+      } else if (currentItemCount == pairCount) {
+        compItems[j][item] -= 1;
+      }
+    }
+  }
+  currInv[item] -= 1;
+}
+
+function setCraftable(pair) {
+  pair.style.content = 'url("./assets/fullicons/' + pair.id + '.png")';
+}
+
+function setCarousel(pair) {
+  pair.style.content = 'url("./assets/frostedicons/' + pair.id + '.png")';
+}
+
+function setUncraftable(pair) {
+  pair.style.content = 'url("./assets/dimicons/' + pair.id + '.png")';
+}
+
+function setAllCraftable(pairlist) {
+  for (const pair of pairlist) {
+    setCraftable(pair);
+  }
+}
+
+function setAllUncraftable(pairlist) {
+  for (const pair of pairlist) {
+    setUncraftable(pair);
+  }
+}
+
+function craftItem(pair) {
+  if (pair.style.content != 'url("./assets/fullicons/' + pair.id + '.png")') {
+    return;
+  }
+  row =
+    $(pair)
+      .closest("tr")
+      .index() - 1;
+  col =
+    $(pair)
+      .closest("td")
+      .index() - 1;
+  decrementtable(row, inventory, itemtable, itemimages, baseitemimages);
+  decrementtable(col, inventory, itemtable, itemimages, baseitemimages);
+  currentval = Number(
+    document.getElementById(String(row)).childNodes[2].nodeValue
+  );
+  document.getElementById(String(row)).childNodes[2].nodeValue = String(
+    currentval - 1
+  );
+  currentval = Number(
+    document.getElementById(String(col)).childNodes[2].nodeValue
+  );
+  document.getElementById(String(col)).childNodes[2].nodeValue = String(
+    currentval - 1
+  );
+}
+
+// function uncraftItem(pair){
+//   row = $(pair).closest('tr').index() - 1
+//   col = $(pair).closest('td').index() - 1
+//   incrementtable(row, inventory, itemtable, itemimages,baseitemimages);
+//   incrementtable(col, inventory, itemtable, itemimages,baseitemimages);
+//   currentval = Number(document.getElementById(String(row)).childNodes[2].nodeValue)
+//   document.getElementById(String(row)).childNodes[2].nodeValue = String(currentval + 1);
+//   currentval = Number(document.getElementById(String(col)).childNodes[2].nodeValue)
+//   document.getElementById(String(col)).childNodes[2].nodeValue = String(currentval + 1);
+// }
 
 // 1x8 array of half-item counts
 const inventory = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -70,241 +282,50 @@ itemimages.push([
   document.getElementById("fon")
 ]);
 
-baseitemimages = []
+baseitemimages = [];
 baseitemimages.push([
   document.getElementById("bf1"),
-  document.getElementById("bf2"),
-])
+  document.getElementById("bf2")
+]);
 baseitemimages.push([
   document.getElementById("rod1"),
-  document.getElementById("rod2"),
-])
+  document.getElementById("rod2")
+]);
 baseitemimages.push([
   document.getElementById("recurve1"),
-  document.getElementById("recurve2"),
-])
+  document.getElementById("recurve2")
+]);
 baseitemimages.push([
   document.getElementById("tear1"),
-  document.getElementById("tear2"),
-])
+  document.getElementById("tear2")
+]);
 baseitemimages.push([
   document.getElementById("vest1"),
-  document.getElementById("vest2"),
-])
+  document.getElementById("vest2")
+]);
 baseitemimages.push([
   document.getElementById("cloak1"),
-  document.getElementById("cloak2"),
-])
+  document.getElementById("cloak2")
+]);
 baseitemimages.push([
   document.getElementById("giants belt1"),
-  document.getElementById("giants belt2"),
-])
+  document.getElementById("giants belt2")
+]);
 baseitemimages.push([
   document.getElementById("spatula1"),
-  document.getElementById("spatula2"),
-])
+  document.getElementById("spatula2")
+]);
 
-for (const itemrow of baseitemimages){
-  for (const item of itemrow){
-    item.id = item.id.substring(0,item.id.length-1)
-    setUncraftable(item)
+for (const itemrow of baseitemimages) {
+  for (const item of itemrow) {
+    item.id = item.id.substring(0, item.id.length - 1);
+    setUncraftable(item);
   }
 }
 
-for (const itemrow of itemimages){
-  for (const item of itemrow){
-    setUncraftable(item)
-    item.setAttribute('onclick', 'craftItem(this)')
+for (const itemrow of itemimages) {
+  for (const item of itemrow) {
+    setUncraftable(item);
+    item.setAttribute("onclick", "craftItem(this)");
   }
-}
-
-
-document.oncontextmenu = new Function("return false;");
-
-document.getElementById("close-btn").addEventListener("click", function(e) {
-  let window = remote.getCurrentWindow();
-  window.close();
-});
-
-document.getElementById("minimize-btn").addEventListener("click", function(e) {
-  let window = remote.getCurrentWindow();
-  const itembreak = document.getElementById("itembreak");
-  const pagebreak = document.getElementById("pagebreak");
-  const btn = document.getElementById("minimize-btn");
-  if (!itembreak) {
-    page.style.backgroundImage = 'url("./assets/item-background.png")';
-    window.setContentSize(450, 709);
-    btn.style.content = 'url("./assets/minus.png")';
-
-    const newitembreak = document.createElement("hr");
-    newitembreak.id = "itembreak";
-    newitembreak.size = 3;
-    pagebreak.appendChild(newitembreak);
-    return;
-  }
-  window.setContentSize(450, 120);
-  btn.style.content = 'url("./assets/plus.png")';
-  page.style.backgroundImage = 'url("./assets/minimized-items.png")';
-  pagebreak.removeChild(itembreak);
-});
-
-function decrement(button) {
-  const currentval = Number(button.parentElement.childNodes[2].nodeValue);
-  if (currentval === 0) {
-    return;
-  }
-  const index = Number(button.parentElement.id);
-  decrementtable(index, inventory, itemtable, itemimages,baseitemimages);
-  button.parentElement.childNodes[2].nodeValue = String(currentval - 1);
-}
-
-function increment(button) {
-  const currentval = Number(button.parentElement.childNodes[2].nodeValue);
-
-  if (currentval === 9) {
-    return;
-  }
-  const index = Number(button.parentElement.id);
-  incrementtable(index, inventory, itemtable, itemimages,baseitemimages);
-  button.parentElement.childNodes[2].nodeValue = String(currentval + 1);
-}
-
-function reset(currInv, allitems) {
-  currInv = new Array(8).fill(0);
-  allitems = Array.from(Array(8), _ => Array(8).fill(0));
-  return [currInv, allitems];
-}
-
-function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
-  setAllCraftable(baseitemimages[item])
-  for (let i = 0; i < item; i++) {
-    pair = itemimages[item][i]
-    if (currInv[i] == 0) {
-      compItems[item][i] = -1;
-      setCarousel(pair)
-    } else if (currInv[i] >= 1 && currInv[item] == 0) {
-      compItems[item][i] = 1;
-      setCraftable(pair)
-    } else if (currInv[i] > compItems[item][i]) {
-      compItems[item][i] += 1;
-      setCraftable(pair)
-    }
-  }
-  for (let j = item; j < 8; j++) {
-    pair = itemimages[j][item]
-    if (j == item) {
-      if (currInv[j] == 0) {
-        compItems[j][item] = -1;
-        setCarousel(pair)
-      } else if (currInv[j] == 1) {
-        compItems[j][item] = 1;
-        setCraftable(pair)
-      } else if (currInv[j] % 2 == 1) {
-        compItems[j][item] += 1;
-        setCraftable(pair)
-      }
-    } else {
-      if (currInv[j] == 0) {
-        compItems[j][item] = -1;
-        setCarousel(pair)
-      } else if (currInv[j] >= 1 && currInv[item] == 0) {
-        compItems[j][item] = 1;
-        setCraftable(pair)
-      } else if (currInv[j] > compItems[j][item]) {
-        compItems[j][item] += 1;
-        setCraftable(pair)
-      }
-    }
-  }
-  currInv[item] += 1;
-}
-
-// takes in an item index to decrement, your current
-// inventory (1x8 array of half-items) and the 8x8 table of
-// craftable items and updates your inventory and table accordingly
-function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
-  const currentItemCount = currInv[item];
-  if (currentItemCount === 1){
-    setAllUncraftable(baseitemimages[item])
-  }
-  for (let i = 0; i < item; i++) {
-    const pairCount = compItems[item][i];
-    const pair = itemimages[item][i]
-    if (currentItemCount == 1 && pairCount >= 1) {
-      compItems[item][i] = -1;
-      setCarousel(pair)
-    } else if (currentItemCount == 1 && pairCount == -1) {
-      compItems[item][i] = 0;
-      setUncraftable(pair)
-    } else if (currentItemCount == pairCount) {
-      compItems[item][i] -= 1;
-    }
-  }
-  for (let j = item; j < 8; j++) {
-    const pairCount = compItems[j][item];
-    const pair = itemimages[j][item]
-    if (j == item) {
-      if (currentItemCount == 1) {
-        compItems[j][item] = 0;
-        setUncraftable(pair)
-      } else if (currInv[j] == 2) {
-        compItems[j][item] = -1;
-        setCarousel(pair)
-      } else if (currInv[j] % 2 == 0) {
-        compItems[j][item] -= 1;
-      }
-    } else {
-      if (currentItemCount == 1 && pairCount >= 1) {
-        compItems[j][item] = -1;
-        setCarousel(pair)
-      } else if (currentItemCount == 1 && pairCount == -1) {
-        compItems[j][item] = 0;
-        setUncraftable(pair)
-      } else if (currentItemCount == pairCount) {
-        compItems[j][item] -= 1;
-      }
-    }
-  }
-  currInv[item] -= 1;
-}
-
-
-function setCraftable(pair){
-  pair.style.content = 'url("./assets/fullicons/' + pair.id + '.png")'
-}
-
-function setCarousel(pair){
-  pair.style.content = 'url("./assets/frostedicons/' + pair.id + '.png")'
-}
-
-function setUncraftable(pair){
-  pair.style.content = 'url("./assets/dimicons/' + pair.id + '.png")'
-}
-
-function setAllCraftable(pairlist){
-  for (const pair of pairlist){
-    setCraftable(pair)
-  }
-}
-
-function setAllUncraftable(pairlist){
-  for (const pair of pairlist){
-    setUncraftable(pair)
-  }
-}
-
-function craftItem(pair){
-  if (pair.style.content != 'url("./assets/fullicons/' + pair.id + '.png")'){
-    alert('not craftable')
-    return
-  }
-  alert('craftable')
-  row = $(pair).closest('tr').index() - 1
-  col = $(pair).closest('td').index() - 1
-  decrementtable(row, inventory, itemtable, itemimages,baseitemimages);
-  decrementtable(col, inventory, itemtable, itemimages,baseitemimages);
-  currentval = Number(document.getElementById(String(row)).childNodes[2].nodeValue)
-  document.getElementById(String(row)).childNodes[2].nodeValue = String(currentval - 1);
-  currentval = Number(document.getElementById(String(col)).childNodes[2].nodeValue)
-  document.getElementById(String(col)).childNodes[2].nodeValue = String(currentval - 1);
 }

@@ -82,16 +82,14 @@ table#countertable{
 }
 
 span{
-    /* width: 50px; */
     display: inline-block;
     color: white;
     font-size: 16pt;
-    /* left: 50%; */
     width: 50px;
     margin: 0;
     padding: 0;
     text-align: center;
-    font-family: Segoe UI,
+    font-family: "Segoe UI";
 }
 
 td {
