@@ -1,3 +1,4 @@
+var $ = require('jquery')
 const remote = require("electron").remote;
 
 const page = document.getElementById("page");
@@ -24,13 +25,13 @@ itemimages.push([
   document.getElementById("deathcap")
 ]);
 itemimages.push([
-  document.getElementById("swordofthedivine"),
+  document.getElementById("divine"),
   document.getElementById("rageblade"),
   document.getElementById("rfc")
 ]);
 itemimages.push([
   document.getElementById("spear"),
-  document.getElementById("ludens"),
+  document.getElementById("luden"),
   document.getElementById("shiv"),
   document.getElementById("seraph")
 ]);
@@ -43,18 +44,18 @@ itemimages.push([
 ]);
 itemimages.push([
   document.getElementById("bt"),
-  document.getElementById("ionicspark"),
-  document.getElementById("cursedblade"),
+  document.getElementById("ionic spark"),
+  document.getElementById("cursed blade"),
   document.getElementById("hush"),
-  document.getElementById("swordbreaker"),
-  document.getElementById("dragonclaw")
+  document.getElementById("sword breaker"),
+  document.getElementById("dragon claw")
 ]);
 itemimages.push([
   document.getElementById("zekes"),
   document.getElementById("morello"),
   document.getElementById("titanic"),
   document.getElementById("redemption"),
-  document.getElementById("redbuff"),
+  document.getElementById("red"),
   document.getElementById("zephyr"),
   document.getElementById("warmog")
 ]);
@@ -63,11 +64,59 @@ itemimages.push([
   document.getElementById("yuumi"),
   document.getElementById("bork"),
   document.getElementById("darkin"),
-  document.getElementById("knightsvow"),
+  document.getElementById("kv"),
   document.getElementById("hurricane"),
   document.getElementById("mallet"),
   document.getElementById("fon")
 ]);
+
+baseitemimages = []
+baseitemimages.push([
+  document.getElementById("bf1"),
+  document.getElementById("bf2"),
+])
+baseitemimages.push([
+  document.getElementById("rod1"),
+  document.getElementById("rod2"),
+])
+baseitemimages.push([
+  document.getElementById("recurve1"),
+  document.getElementById("recurve2"),
+])
+baseitemimages.push([
+  document.getElementById("tear1"),
+  document.getElementById("tear2"),
+])
+baseitemimages.push([
+  document.getElementById("vest1"),
+  document.getElementById("vest2"),
+])
+baseitemimages.push([
+  document.getElementById("cloak1"),
+  document.getElementById("cloak2"),
+])
+baseitemimages.push([
+  document.getElementById("giants belt1"),
+  document.getElementById("giants belt2"),
+])
+baseitemimages.push([
+  document.getElementById("spatula1"),
+  document.getElementById("spatula2"),
+])
+
+for (const itemrow of baseitemimages){
+  for (const item of itemrow){
+    item.id = item.id.substring(0,item.id.length-1)
+    setUncraftable(item)
+  }
+}
+
+for (const itemrow of itemimages){
+  for (const item of itemrow){
+    setUncraftable(item)
+    item.setAttribute('onclick', 'craftItem(this)')
+  }
+}
 
 
 document.oncontextmenu = new Function("return false;");
@@ -105,9 +154,7 @@ function decrement(button) {
     return;
   }
   const index = Number(button.parentElement.id);
-  decrementtable(index, inventory, itemtable, itemimages);
-  // alert(inventory);
-  // alert(itemtable);
+  decrementtable(index, inventory, itemtable, itemimages,baseitemimages);
   button.parentElement.childNodes[2].nodeValue = String(currentval - 1);
 }
 
@@ -118,25 +165,18 @@ function increment(button) {
     return;
   }
   const index = Number(button.parentElement.id);
-  incrementtable(index, inventory, itemtable, itemimages);
-  // alert(inventory);
-  // alert(itemtable);
+  incrementtable(index, inventory, itemtable, itemimages,baseitemimages);
   button.parentElement.childNodes[2].nodeValue = String(currentval + 1);
 }
 
-// takes in your current inventory (1x8 array of half-items)
-// and the 8x8 table of craftable items and sets their contents
-// to 0, returning a list containing both objects
 function reset(currInv, allitems) {
   currInv = new Array(8).fill(0);
   allitems = Array.from(Array(8), _ => Array(8).fill(0));
   return [currInv, allitems];
 }
 
-// takes in an item index to increment, your current
-// inventory (1x8 array of half-items) and the 8x8 table of
-// craftable items and updates your inventory and table accordingly
-function incrementtable(item, currInv, compItems, itemimages) {
+function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
+  setAllCraftable(baseitemimages[item])
   for (let i = 0; i < item; i++) {
     pair = itemimages[item][i]
     if (currInv[i] == 0) {
@@ -182,8 +222,11 @@ function incrementtable(item, currInv, compItems, itemimages) {
 // takes in an item index to decrement, your current
 // inventory (1x8 array of half-items) and the 8x8 table of
 // craftable items and updates your inventory and table accordingly
-function decrementtable(item, currInv, compItems, itemimages) {
+function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
   const currentItemCount = currInv[item];
+  if (currentItemCount === 1){
+    setAllUncraftable(baseitemimages[item])
+  }
   for (let i = 0; i < item; i++) {
     const pairCount = compItems[item][i];
     const pair = itemimages[item][i]
@@ -227,19 +270,41 @@ function decrementtable(item, currInv, compItems, itemimages) {
 
 
 function setCraftable(pair){
-  pair.style.opacity = "1.0"
-  pair.parentElement.style.opacity = "1.0"
-  pair.parentElement.style.border = "1px solid #ffbf00"
+  pair.style.content = 'url("./assets/fullicons/' + pair.id + '.png")'
 }
 
 function setCarousel(pair){
-  pair.style.opacity = "1.0"
-  pair.parentElement.style.opacity = "0.5"
-  pair.parentElement.style.border = "1px solid #E1C368"
+  pair.style.content = 'url("./assets/frostedicons/' + pair.id + '.png")'
 }
 
 function setUncraftable(pair){
-  pair.style.opacity = "0.4"
-  pair.parentElement.style.opacity = "0.3"
-  pair.parentElement.style.border = "1px solid #E1C368"
+  pair.style.content = 'url("./assets/dimicons/' + pair.id + '.png")'
+}
+
+function setAllCraftable(pairlist){
+  for (const pair of pairlist){
+    setCraftable(pair)
+  }
+}
+
+function setAllUncraftable(pairlist){
+  for (const pair of pairlist){
+    setUncraftable(pair)
+  }
+}
+
+function craftItem(pair){
+  if (pair.style.content != 'url("./assets/fullicons/' + pair.id + '.png")'){
+    alert('not craftable')
+    return
+  }
+  alert('craftable')
+  row = $(pair).closest('tr').index() - 1
+  col = $(pair).closest('td').index() - 1
+  decrementtable(row, inventory, itemtable, itemimages,baseitemimages);
+  decrementtable(col, inventory, itemtable, itemimages,baseitemimages);
+  currentval = Number(document.getElementById(String(row)).childNodes[2].nodeValue)
+  document.getElementById(String(row)).childNodes[2].nodeValue = String(currentval - 1);
+  currentval = Number(document.getElementById(String(col)).childNodes[2].nodeValue)
+  document.getElementById(String(col)).childNodes[2].nodeValue = String(currentval - 1);
 }
