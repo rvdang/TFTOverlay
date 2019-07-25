@@ -123,3 +123,41 @@ table#itemtable{
     transform: translate(-52%,0);
     border-collapse: collapse;
 }
+
+div#craftingdiv{
+    height: 120px;
+    width: 400px;
+    background-image: url('./assets/crafteditem-background.png');
+    background-size: 400px 120px;
+    text-align: center;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 22px;
+    left: 17px;
+}
+
+table#craftedtable{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 0;
+    border-spacing: 7px;
+}
+
+.crafted{
+    height: 40px;
+    width: 40px;
+    background-image: url('./assets/fullicons/bork.png');
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    padding: 0px;
+    text-align: center;
+}
+
+#crafted0,#crafted1{
+    height: 40px;
+    width: 40px;
+    padding: 0px;
+}

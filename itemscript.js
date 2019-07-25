@@ -329,3 +329,13 @@ for (const itemrow of itemimages) {
     item.setAttribute("onclick", "craftItem(this)");
   }
 }
+
+craftedItems = [[],[]]
+for (let i=0; i<2; i++){
+  for (let k=0; k<8; k++){
+    const id = "crafted" + String(i) + String(k)
+    const td = document.getElementById(id)
+    td.setAttribute('onclick', 'alert("clicked")')
+    craftedItems[i].push(td)
+  }
+}
