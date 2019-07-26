@@ -68,10 +68,10 @@ function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
       setCarousel(pair);
     } else if (currInv[i] >= 1 && currInv[item] == 0) {
       compItems[item][i] = 1;
-      setCraftable(pair);
+      setCraftable(pair, 1);
     } else if (currInv[i] > compItems[item][i]) {
       compItems[item][i] += 1;
-      setCraftable(pair);
+      setCraftable(pair, compItems[item][i]);
     }
   }
   for (let j = item; j < 8; j++) {
@@ -82,10 +82,10 @@ function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
         setCarousel(pair);
       } else if (currInv[j] == 1) {
         compItems[j][item] = 1;
-        setCraftable(pair);
+        setCraftable(pair, 1);
       } else if (currInv[j] % 2 == 1) {
         compItems[j][item] += 1;
-        setCraftable(pair);
+        setCraftable(pair, compItems[j][item]);
       }
     } else {
       if (currInv[j] == 0) {
@@ -93,10 +93,10 @@ function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
         setCarousel(pair);
       } else if (currInv[j] >= 1 && currInv[item] == 0) {
         compItems[j][item] = 1;
-        setCraftable(pair);
+        setCraftable(pair, 1);
       } else if (currInv[j] > compItems[j][item]) {
         compItems[j][item] += 1;
-        setCraftable(pair);
+        setCraftable(pair, compItems[j][item]);
       }
     }
   }
@@ -122,6 +122,7 @@ function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
       setUncraftable(pair);
     } else if (currentItemCount == pairCount) {
       compItems[item][i] -= 1;
+      setCraftable(pair, compItems[item][i]);
     }
   }
   for (let j = item; j < 8; j++) {
@@ -136,6 +137,7 @@ function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
         setCarousel(pair);
       } else if (currInv[j] % 2 == 0) {
         compItems[j][item] -= 1;
+        setCraftable(pair, compItems[j][item]);
       }
     } else {
       if (currentItemCount == 1 && pairCount >= 1) {
@@ -146,22 +148,28 @@ function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
         setUncraftable(pair);
       } else if (currentItemCount == pairCount) {
         compItems[j][item] -= 1;
+        setCraftable(pair, compItems[j][item]);
       }
     }
   }
   currInv[item] -= 1;
 }
 
-function setCraftable(pair) {
-  pair.style.content = 'url("./assets/fullicons/' + pair.id + '.png")';
+function setCraftable(pair, number) {
+  pair.style.backgroundImage = 'url("./assets/fullicons/' + pair.id + '.png")';
+  if(number){
+    pair.innerHTML = String(number)
+  }
 }
 
 function setCarousel(pair) {
-  pair.style.content = 'url("./assets/frostedicons/' + pair.id + '.png")';
+  pair.style.backgroundImage = 'url("./assets/frostedicons/' + pair.id + '.png")';
+  pair.innerHTML = ""
 }
 
 function setUncraftable(pair) {
-  pair.style.content = 'url("./assets/dimicons/' + pair.id + '.png")';
+  pair.style.backgroundImage = 'url("./assets/dimicons/' + pair.id + '.png")';
+  pair.innerHTML = ""
 }
 
 function setAllCraftable(pairlist) {
@@ -184,7 +192,7 @@ function incDecCounter(index, inc) {
 }
 
 function craftItem(pair) {
-  if (pair.style.content != 'url("./assets/fullicons/' + pair.id + '.png")') {
+  if (pair.style.backgroundImage != 'url("./assets/fullicons/' + pair.id + '.png")') {
     return;
   }
   row =
@@ -239,18 +247,18 @@ function shiftCraftedList() {
   let nextItem;
   for (let k = 0; k < 7; k++) {
     currentItem = craftedItems[0][k];
-    if (currentItem.value) {
+    if (currentItem.style.backgroundImage) {
       continue;
     }
     nextItem = craftedItems[0][k + 1];
     currentItem.style.backgroundImage = nextItem.style.backgroundImage;
     nextItem.style.backgroundImage = null;
     currentItem.value = nextItem.value;
-    currentItem.value = null;
+    nextItem.value = null;
   }
   currentItem = craftedItems[0][7];
   if (!currentItem.style.backgroundImage) {
-    nextItem = craftItems[1][0];
+    nextItem = craftedItems[1][0];
     currentItem.style.backgroundImage = nextItem.style.backgroundImage;
     nextItem.style.backgroundImage = null;
     currentItem.value = nextItem.value;

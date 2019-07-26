@@ -84,12 +84,12 @@ table#countertable{
 span{
     display: inline-block;
     color: white;
-    font-size: 16pt;
+    font-size: 14pt;
     width: 50px;
     margin: 0;
     padding: 0;
     text-align: center;
-    font-family: "Segoe UI";
+    font-family: "Tw Cen MT";
 }
 
 td {
@@ -104,16 +104,16 @@ td {
 }
 
 td.itemtabledata{
-    padding: 0;
-}
-
-img.itemtabledata{
-    display: block;
-    width: 45px;
     height: 45px;
+    width: 45px;
+    color: white;
+    font-size: 16pt;
     text-align: center;
-    margin: 0;
-    padding: 0;
+    background-image: url('');
+    background-repeat: no-repeat;
+    background-size: 45px 45px;
+    padding: 0px;
+    text-align: center;
 }
 
 table#itemtable{
@@ -121,7 +121,7 @@ table#itemtable{
     border-spacing: 0px 0px;
     left: 50%;
     transform: translate(-52%,0);
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
 }
 
 div#craftingdiv{
