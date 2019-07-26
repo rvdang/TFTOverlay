@@ -233,10 +233,16 @@ function removeFromList(td) {
   }
   row = Number(td.value[0]);
   col = Number(td.value[1]);
-  td.value = null;
-  td.style.backgroundImage = null;
+  if (row === col && inventory[row] >=8){
+    return
+  }
+  if (inventory[row] >= 9 || inventory[col >= 9]){
+    return
+  }
   incrementtable(row, inventory, itemtable, itemimages, baseitemimages);
   incrementtable(col, inventory, itemtable, itemimages, baseitemimages);
+  td.value = null;
+  td.style.backgroundImage = null;
   incDecCounter(row, true);
   incDecCounter(col, true);
   shiftCraftedList();
