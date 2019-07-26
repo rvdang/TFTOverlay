@@ -176,6 +176,13 @@ function setAllUncraftable(pairlist) {
   }
 }
 
+function incDecCounter(index, inc) {
+  counter = document.getElementById(String(index)).childNodes[2];
+  currentval = Number(counter.nodeValue);
+  incdec = inc ? 1 : -1;
+  counter.nodeValue = String(currentval + incdec);
+}
+
 function craftItem(pair) {
   if (pair.style.content != 'url("./assets/fullicons/' + pair.id + '.png")') {
     return;
@@ -188,32 +195,79 @@ function craftItem(pair) {
     $(pair)
       .closest("td")
       .index() - 1;
+  if (!addItemToList(pair, row, col)) {
+    return;
+  }
   decrementtable(row, inventory, itemtable, itemimages, baseitemimages);
   decrementtable(col, inventory, itemtable, itemimages, baseitemimages);
-  currentval = Number(
-    document.getElementById(String(row)).childNodes[2].nodeValue
-  );
-  document.getElementById(String(row)).childNodes[2].nodeValue = String(
-    currentval - 1
-  );
-  currentval = Number(
-    document.getElementById(String(col)).childNodes[2].nodeValue
-  );
-  document.getElementById(String(col)).childNodes[2].nodeValue = String(
-    currentval - 1
-  );
+  incDecCounter(row, false);
+  incDecCounter(col, false);
 }
 
-// function uncraftItem(pair){
-//   row = $(pair).closest('tr').index() - 1
-//   col = $(pair).closest('td').index() - 1
-//   incrementtable(row, inventory, itemtable, itemimages,baseitemimages);
-//   incrementtable(col, inventory, itemtable, itemimages,baseitemimages);
-//   currentval = Number(document.getElementById(String(row)).childNodes[2].nodeValue)
-//   document.getElementById(String(row)).childNodes[2].nodeValue = String(currentval + 1);
-//   currentval = Number(document.getElementById(String(col)).childNodes[2].nodeValue)
-//   document.getElementById(String(col)).childNodes[2].nodeValue = String(currentval + 1);
-// }
+function addItemToList(pair, row, col) {
+  for (let i = 0; i < 2; i++) {
+    for (let k = 0; k < 8; k++) {
+      if (craftedItems[i][k].style.backgroundImage) {
+        continue;
+      }
+      craftedItems[i][k].style.backgroundImage =
+        'url("./assets/fullicons/' + pair.id + '.png")';
+      craftedItems[i][k].value = String(row) + String(col);
+      return true;
+    }
+  }
+  return false;
+}
+
+function removeFromList(td) {
+  if (!td.value) {
+    return;
+  }
+  row = Number(td.value[0]);
+  col = Number(td.value[1]);
+  td.value = null;
+  td.style.backgroundImage = null;
+  incrementtable(row, inventory, itemtable, itemimages, baseitemimages);
+  incrementtable(col, inventory, itemtable, itemimages, baseitemimages);
+  incDecCounter(row, true);
+  incDecCounter(col, true);
+  shiftCraftedList();
+}
+
+function shiftCraftedList() {
+  let currentItem;
+  let nextItem;
+  for (let k = 0; k < 7; k++) {
+    currentItem = craftedItems[0][k];
+    if (currentItem.value) {
+      continue;
+    }
+    nextItem = craftedItems[0][k + 1];
+    currentItem.style.backgroundImage = nextItem.style.backgroundImage;
+    nextItem.style.backgroundImage = null;
+    currentItem.value = nextItem.value;
+    currentItem.value = null;
+  }
+  currentItem = craftedItems[0][7];
+  if (!currentItem.style.backgroundImage) {
+    nextItem = craftItems[1][0];
+    currentItem.style.backgroundImage = nextItem.style.backgroundImage;
+    nextItem.style.backgroundImage = null;
+    currentItem.value = nextItem.value;
+    nextItem.value = null;
+  }
+  for (let k = 0; k < 7; k++) {
+    currentItem = craftedItems[1][k];
+    if (currentItem.style.backgroundImage) {
+      continue;
+    }
+    nextItem = craftedItems[1][k + 1];
+    currentItem.style.backgroundImage = nextItem.style.backgroundImage;
+    nextItem.style.backgroundImage = null;
+    currentItem.value = nextItem.value;
+    nextItem.value = null;
+  }
+}
 
 // 1x8 array of half-item counts
 const inventory = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -330,12 +384,12 @@ for (const itemrow of itemimages) {
   }
 }
 
-craftedItems = [[],[]]
-for (let i=0; i<2; i++){
-  for (let k=0; k<8; k++){
-    const id = "crafted" + String(i) + String(k)
-    const td = document.getElementById(id)
-    td.setAttribute('onclick', 'alert("clicked")')
-    craftedItems[i].push(td)
+const craftedItems = [[], []];
+for (let i = 0; i < 2; i++) {
+  for (let k = 0; k < 8; k++) {
+    const id = "crafted" + String(i) + String(k);
+    const td = document.getElementById(id);
+    td.setAttribute("onclick", "removeFromList(this)");
+    craftedItems[i].push(td);
   }
 }
