@@ -84,12 +84,12 @@ table#countertable{
 span{
     display: inline-block;
     color: white;
-    font-size: 16pt;
+    font-size: 14pt;
     width: 50px;
     margin: 0;
     padding: 0;
     text-align: center;
-    font-family: "Segoe UI";
+    font-family: "Sylfaen";
 }
 
 td {
@@ -104,16 +104,16 @@ td {
 }
 
 td.itemtabledata{
-    padding: 0;
-}
-
-img.itemtabledata{
-    display: block;
-    width: 45px;
     height: 45px;
+    width: 45px;
+    color: white;
+    font-size: 16pt;
     text-align: center;
-    margin: 0;
-    padding: 0;
+    background-image: url('');
+    background-repeat: no-repeat;
+    background-size: 45px 45px;
+    padding: 0px;
+    text-align: center;
 }
 
 table#itemtable{
@@ -121,5 +121,56 @@ table#itemtable{
     border-spacing: 0px 0px;
     left: 50%;
     transform: translate(-52%,0);
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
+}
+
+div#craftingdiv{
+    height: 120px;
+    width: 400px;
+    background-image: url('./assets/crafteditem-background.png');
+    background-size: 400px 120px;
+    text-align: center;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 22px;
+    left: 17px;
+}
+
+table#craftedtable{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 0;
+    border-spacing: 7px;
+}
+
+.crafted{
+    height: 40px;
+    width: 40px;
+    background-image: url('');
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    padding: 0px;
+    text-align: center;
+}
+
+#crafted0,#crafted1{
+    height: 40px;
+    width: 40px;
+    padding: 0px;
+}
+
+#legend{
+    position: absolute;
+    height: 144px;
+    width: 144px;
+    top: 200px;
+    right: 30px;
+}
+
+img{
+    height: 15px;
+    width: 15px;
 }
