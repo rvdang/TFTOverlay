@@ -195,20 +195,20 @@ function craftItem(pair) {
   if (pair.style.backgroundImage != 'url("./assets/fullicons/' + pair.id + '.png")') {
     return;
   }
-  row =
+  row = 
     $(pair)
       .closest("tr")
       .index() - 1;
-  col =
+  col = 
     $(pair)
       .closest("td")
       .index() - 1;
-  if (!addItemToList(pair, row, col)) {
+  if (!addItemToList(pair, 7-row, col)) {
     return;
   }
-  decrementtable(row, inventory, itemtable, itemimages, baseitemimages);
+  decrementtable(7-row, inventory, itemtable, itemimages, baseitemimages);
   decrementtable(col, inventory, itemtable, itemimages, baseitemimages);
-  incDecCounter(row, false);
+  incDecCounter(7-row, false);
   incDecCounter(col, false);
 }
 
@@ -233,10 +233,10 @@ function removeFromList(td) {
   }
   row = Number(td.value[0]);
   col = Number(td.value[1]);
-  if (row === col && inventory[row] >=8){
+  if (row === col && inventory[row] >= 8){
     return
   }
-  if (inventory[row] >= 9 || inventory[col >= 9]){
+  if (inventory[row] >= 9 || inventory[col] >= 9){
     return
   }
   incrementtable(row, inventory, itemtable, itemimages, baseitemimages);
