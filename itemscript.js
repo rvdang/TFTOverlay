@@ -157,19 +157,19 @@ function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
 
 function setCraftable(pair, number) {
   pair.style.backgroundImage = 'url("./assets/fullicons/' + pair.id + '.png")';
-  if(number){
-    pair.innerHTML = String(number)
-  }
+  // if(number){
+  //   pair.innerHTML = String(number)
+  // }
 }
 
 function setCarousel(pair) {
   pair.style.backgroundImage = 'url("./assets/frostedicons/' + pair.id + '.png")';
-  pair.innerHTML = ""
+  // pair.innerHTML = ""
 }
 
 function setUncraftable(pair) {
   pair.style.backgroundImage = 'url("./assets/dimicons/' + pair.id + '.png")';
-  pair.innerHTML = ""
+  // pair.innerHTML = ""
 }
 
 function setAllCraftable(pairlist) {
