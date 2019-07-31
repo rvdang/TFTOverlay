@@ -407,3 +407,23 @@ for (let i = 0; i < 2; i++) {
     craftedItems[i].push(td);
   }
 }
+
+let timer;
+let delay = 10;
+
+$(".itemtabledata").hover(
+  function(){
+    // clearTimeout(timer)
+    const id = $(this).attr("id")
+    if (!id){
+      return
+    }
+    $("#legend").attr("src", "./assets/descriptions/" + id + ".png")
+  },
+  function(){
+    $("#legend").attr("src", "./assets/legend.png")
+    // timer = setTimeout(function(){
+    //   $("#legend").attr("src", "./assets/legend.png")
+    // }, delay)
+  }
+)
