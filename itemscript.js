@@ -10,6 +10,8 @@ document.getElementById("close-btn").addEventListener("click", function(e) {
   window.close();
 });
 
+document.getElementById("reset-btn").addEventListener("click", reset);
+
 document.getElementById("minimize-btn").addEventListener("click", function(e) {
   let window = remote.getCurrentWindow();
   const itembreak = document.getElementById("itembreak");
@@ -53,10 +55,37 @@ function increment(button) {
   button.parentElement.childNodes[2].nodeValue = String(currentval + 1);
 }
 
-function reset(currInv, allitems) {
-  currInv = new Array(8).fill(0);
-  allitems = Array.from(Array(8), _ => Array(8).fill(0));
-  return [currInv, allitems];
+function reset() {
+  for (const item in inventory) {
+    inventory[item] = 0;
+  }
+  for (const itemrow in itemtable) {
+    for (const item in itemtable[itemrow]) {
+      itemtable[itemrow][item] = 0;
+    }
+  }
+  for (const itemrow of baseitemimages) {
+    for (const item of itemrow) {
+      setUncraftable(item);
+    }
+  }
+
+  for (const itemrow of itemimages) {
+    for (const item of itemrow) {
+      setUncraftable(item);
+    }
+  }
+
+  for (let i = 0; i < 8; i++) {
+    document.getElementById(String(i)).childNodes[2].nodeValue = "0";
+  }
+
+  for (let i = 0; i < 2; i++) {
+    for (let k = 0; k < 8; k++) {
+      craftedItems[i][k].style.backgroundImage = "";
+      craftedItems[i][k].value = "";
+    }
+  }
 }
 
 function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
@@ -157,19 +186,15 @@ function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
 
 function setCraftable(pair, number) {
   pair.style.backgroundImage = 'url("./assets/fullicons/' + pair.id + '.png")';
-  // if(number){
-  //   pair.innerHTML = String(number)
-  // }
 }
 
 function setCarousel(pair) {
-  pair.style.backgroundImage = 'url("./assets/frostedicons/' + pair.id + '.png")';
-  // pair.innerHTML = ""
+  pair.style.backgroundImage =
+    'url("./assets/frostedicons/' + pair.id + '.png")';
 }
 
 function setUncraftable(pair) {
   pair.style.backgroundImage = 'url("./assets/dimicons/' + pair.id + '.png")';
-  // pair.innerHTML = ""
 }
 
 function setAllCraftable(pairlist) {
@@ -192,23 +217,26 @@ function incDecCounter(index, inc) {
 }
 
 function craftItem(pair) {
-  if (pair.style.backgroundImage != 'url("./assets/fullicons/' + pair.id + '.png")') {
+  if (
+    pair.style.backgroundImage !=
+    'url("./assets/fullicons/' + pair.id + '.png")'
+  ) {
     return;
   }
-  row = 
+  row =
     $(pair)
       .closest("tr")
       .index() - 1;
-  col = 
+  col =
     $(pair)
       .closest("td")
       .index() - 1;
-  if (!addItemToList(pair, 7-row, col)) {
+  if (!addItemToList(pair, 7 - row, col)) {
     return;
   }
-  decrementtable(7-row, inventory, itemtable, itemimages, baseitemimages);
+  decrementtable(7 - row, inventory, itemtable, itemimages, baseitemimages);
   decrementtable(col, inventory, itemtable, itemimages, baseitemimages);
-  incDecCounter(7-row, false);
+  incDecCounter(7 - row, false);
   incDecCounter(col, false);
 }
 
@@ -233,11 +261,11 @@ function removeFromList(td) {
   }
   row = Number(td.value[0]);
   col = Number(td.value[1]);
-  if (row === col && inventory[row] >= 8){
-    return
+  if (row === col && inventory[row] >= 8) {
+    return;
   }
-  if (inventory[row] >= 9 || inventory[col] >= 9){
-    return
+  if (inventory[row] >= 9 || inventory[col] >= 9) {
+    return;
   }
   incrementtable(row, inventory, itemtable, itemimages, baseitemimages);
   incrementtable(col, inventory, itemtable, itemimages, baseitemimages);
@@ -412,18 +440,14 @@ let timer;
 let delay = 10;
 
 $(".itemtabledata").hover(
-  function(){
-    // clearTimeout(timer)
-    const id = $(this).attr("id")
-    if (!id){
-      return
+  function() {
+    const id = $(this).attr("id");
+    if (!id) {
+      return;
     }
-    $("#legend").attr("src", "./assets/descriptions/" + id + ".png")
+    $("#legend").attr("src", "./assets/descriptions/" + id + ".png");
   },
-  function(){
-    $("#legend").attr("src", "./assets/legend.png")
-    // timer = setTimeout(function(){
-    //   $("#legend").attr("src", "./assets/legend.png")
-    // }, delay)
+  function() {
+    $("#legend").attr("src", "./assets/legend.png");
   }
-)
+);

@@ -39,6 +39,17 @@ hr{
     -webkit-user-select: none;
 }
 
+#reset-btn{
+    position: absolute;
+    cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 545px;
+    right: 35px;
+    width: 36px;
+    height: 19px;
+}
+
 #minimize-btn{
     right: 30px;
     content: url("./assets/minus.png");
