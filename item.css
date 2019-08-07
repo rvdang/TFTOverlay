@@ -61,34 +61,34 @@ hr{
 
 #move-btn{
     left:4px;
+    right: 0;
     -webkit-app-region: drag;
     cursor: all-scroll;
 }
 table{
     padding: 0;
     margin: 0;
-    /*transform: translate(-1px, 0)*/
 }
 table#countertable{
-    left: 50%;
-    top: 20px;
-    /*transform: translate(1px, 0);*/
+    position:absolute;
+    left: 0px;
+    top: 25px;
     border-spacing: 0px 0px;
 }
 
 .incrementbutton,.decrementbutton{
     cursor: pointer;
     height: 11px;
-    widows: 11px;
+    width: 11px;
 }
 .decrementbutton{
-    padding-right: 2px;
+    padding-right: 0px;
     padding-left: 0;
     content: url("./assets/minus-button.png");
 }
 
 .incrementbutton{
-    padding-left: 2px;
+    padding-left: 0px;
     padding-right: 0;
     content: url("./assets/add-button.png");
 }
@@ -97,7 +97,7 @@ span{
     display: inline-block;
     color: white;
     font-size: 12pt;
-    width: 50px;
+    width: 38px;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -133,8 +133,6 @@ table#itemtable{
     border-spacing: 0px 0px;
     left: 31px;
     top: 159px;
-    /*transform: translate(-52%,0);*/
-    /* border-collapse: collapse; */
 }
 
 div#craftingdiv{
@@ -153,7 +151,6 @@ table#craftedtable{
     position: relative;
     top: 13px;
     left: 14px;
-    /*transform: translate(-50%, -50%);*/
     margin: 0;
     padding: 0;
     border-spacing: 7px;

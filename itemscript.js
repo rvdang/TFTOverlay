@@ -50,7 +50,7 @@ function decrement(button) {
   }
   const index = Number(button.parentElement.id);
   decrementtable(index, inventory, itemtable, itemimages, baseitemimages);
-  button.parentElement.childNodes[2].nodeValue = String(currentval - 1);
+  button.parentElement.childNodes[2].nodeValue = ' ' + String(currentval - 1) + ' ';
 }
 
 function increment(button) {
@@ -61,7 +61,7 @@ function increment(button) {
   }
   const index = Number(button.parentElement.id);
   incrementtable(index, inventory, itemtable, itemimages, baseitemimages);
-  button.parentElement.childNodes[2].nodeValue = String(currentval + 1);
+  button.parentElement.childNodes[2].nodeValue = ' ' + String(currentval + 1) + ' ';
 }
 
 function reset() {
