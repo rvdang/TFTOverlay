@@ -12,27 +12,28 @@ document.getElementById("close-btn").addEventListener("click", function(e) {
 
 document.getElementById("reset-btn").addEventListener("click", reset);
 
-document.getElementById("minimize-btn").addEventListener("click", function(e) {
+document.getElementById("maximize-btn").addEventListener("click", function(e) {
   let window = remote.getCurrentWindow();
-  const itembreak = document.getElementById("itembreak");
-  const pagebreak = document.getElementById("pagebreak");
-  const btn = document.getElementById("minimize-btn");
-  if (!itembreak) {
-    page.style.backgroundImage = 'url("./assets/item-background.png")';
-    window.setContentSize(450, 709);
-    btn.style.content = 'url("./assets/minus.png")';
+  // const itembreak = document.getElementById("itembreak");
+  // const pagebreak = document.getElementById("pagebreak");
+  const btn = document.getElementById("maximize-btn");
 
-    const newitembreak = document.createElement("hr");
-    newitembreak.id = "itembreak";
-    newitembreak.size = 3;
-    pagebreak.appendChild(newitembreak);
-    return;
-  }
-  window.setContentSize(450, 120);
-  btn.style.content = 'url("./assets/plus.png")';
-  page.style.backgroundImage = 'url("./assets/minimized-items.png")';
-  pagebreak.removeChild(itembreak);
-});
+  if (page.style.backgroundImage !== 'url("./assets/item-background.png")') {
+		page.style.backgroundImage = 'url("./assets/item-background.png")';
+		window.setContentSize(375, 579);
+		btn.style.content = 'url("./assets/minus.png")';
+
+		// const newitembreak = document.createElement("hr");
+	  // newitembreak.id = "itembreak";
+	  // newitembreak.size = 3;
+	  // pagebreak.appendChild(newitembreak);
+  } else {
+		page.style.backgroundImage = 'url("./assets/minimized-items.png")';
+		window.setContentSize(375, 92);
+		btn.style.content = 'url("./assets/plus.png")';
+
+	  // pagebreak.removeChild(itembreak);
+}});
 
 const {
   itemPairs: itemimages, 
@@ -94,6 +95,12 @@ function reset() {
       craftedItems[i][k].value = "";
     }
   }
+
+  // for (let i = 0; i < 16; i++) {
+  //   craftedItems[i].style.backgroundImage = "";
+  //   craftedItems[i].value = "";
+  // } 
+
 }
 
 function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
@@ -140,9 +147,6 @@ function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
   currInv[item] += 1;
 }
 
-// takes in an item index to decrement, your current
-// inventory (1x8 array of half-items) and the 8x8 table of
-// craftable items and updates your inventory and table accordingly
 function decrementtable(item, currInv, compItems, itemimages, baseitemimages) {
   const currentItemCount = currInv[item];
   if (currentItemCount === 1) {
@@ -263,6 +267,19 @@ function addItemToList(pair, row, col) {
   return false;
 }
 
+// function addItemToList(pair, row, col) {
+// 	for (let i = 0; i < 16; i++) {
+// 	  if (craftedItems.style.backgroundImage) {
+// 	    continue;
+// 	  }
+// 	  craftedItems.style.backgroundImage =
+// 	    'url("./assets/fullicons/' + pair.id + '.png")';
+// 	  craftedItems.value = String(row) + String(col);
+// 	  return true;
+// 	  }	
+// 	return false;
+// }
+
 function removeFromList(td) {
   if (!td.value) {
     return;
@@ -318,6 +335,22 @@ function shiftCraftedList() {
     nextItem.value = null;
   }
 }
+
+// function shiftCraftedList() {
+//   let currentItem;
+//   let nextItem;
+//   for (let k = 0; k < 16; k++) {
+//     currentItem = craftedItems[k];
+//     if (currentItem.style.backgroundImage) {
+//       continue;
+//     }
+//     nextItem = craftedItems[k + 1];
+//     currentItem.style.backgroundImage = nextItem.style.backgroundImage;
+//     nextItem.style.backgroundImage = null;
+//     currentItem.value = nextItem.value;
+//     nextItem.value = null;
+//   }
+// }
 
 let timer;
 let delay = 10;
@@ -396,6 +429,14 @@ function initializeItems(){
       craftedItems[i].push(td);
     }
   }
+
+  // const craftedItems = [];
+  // for (let i = 0; i < 16; i++) {
+  //   const id = "crafted" + String(i%2) + String(Math.floor(i/2));
+  //   const td = document.getElementById(id);
+  //   td.setAttribute("onclick", "removeFromList(this)");
+  //   craftedItems.push(td);
+  // }
 
   return {itemPairs, baseItems, craftedItems, inventory, itemtable}
 }
