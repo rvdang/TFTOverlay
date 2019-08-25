@@ -39,13 +39,46 @@ hr{
     -webkit-user-select: none;
 }
 
+#filter-btn{
+	position: absolute;
+	cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 115px;
+    left: 40px;
+    width: 41.4px;
+    height: 23.4px;
+}
+
+#load-btn{
+	position: absolute;
+	cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 115px;
+    left: 100px;
+    width: 36.6px;
+    height: 23.4px;
+}
+
+#save-btn{
+	position: absolute;
+	cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 115px;
+    left: 160px;
+    width: 34.2px;
+    height: 23.4px;
+}
+
 #reset-btn{
     position: absolute;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-user-select: none;
-    top: 434px;
-    left: 269px;
+    top: 428px;
+    left: 271px;
     width: 34px;
     height: 20px;
 }
@@ -177,7 +210,7 @@ table#craftedtable{
     height: 128px;
     width: 128px;
     top: 293px;
-    left: 239px;
+    left: 225px;
 }
 
 img{
