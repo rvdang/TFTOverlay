@@ -5,6 +5,8 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
+    x: 100,
+    y: 100,
     width: 375,
     height: 92,
     transparent: true,
@@ -17,7 +19,7 @@ function createWindow() {
   });
 
   mainWindow.loadFile("index.html");
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   mainWindow.setMaximizable(false);
 

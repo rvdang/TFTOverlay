@@ -10,7 +10,7 @@ document.getElementById("close-btn").addEventListener("click", function(e) {
   window.close()
 })
 
-document.getElementById("reset-btn").addEventListener("click", reset)
+// document.getElementById("reset-btn").addEventListener("click", reset)
 
 document.getElementById("maximize-btn").addEventListener("click", function(e) {
   let window = remote.getCurrentWindow()
@@ -64,39 +64,38 @@ function increment(button) {
   button.parentElement.childNodes[2].nodeValue = ' ' + String(currentval + 1) + ' '
 }
 
-function reset() {
-  for (const item in inventory) {
-    inventory[item] = 0
-  }
-  for (const itemrow in itemtable) {
-    for (const item in itemtable[itemrow]) {
-      itemtable[itemrow][item] = 0
-    }
-  }
-  for (const itemrow of baseitemimages) {
-    for (const item of itemrow) {
-      setUncraftable(item)
-    }
-  }
+// function reset() {
+//   for (const item in inventory) {
+//     inventory[item] = 0
+//   }
+//   for (const itemrow in itemtable) {
+//     for (const item in itemtable[itemrow]) {
+//       itemtable[itemrow][item] = 0
+//     }
+//   }
+//   for (const itemrow of baseitemimages) {
+//     for (const item of itemrow) {
+//       setUncraftable(item)
+//     }
+//   }
 
-  for (const itemrow of itemimages) {
-    for (const item of itemrow) {
-      setUncraftable(item)
-    }
-  }
+//   for (const itemrow of itemimages) {
+//     for (const item of itemrow) {
+//       setUncraftable(item)
+//     }
+//   }
 
-  for (let i = 0; i < 8; i++) {
-    document.getElementById(String(i)).childNodes[2].nodeValue = " 0 "
-  }
+//   for (let i = 0; i < 8; i++) {
+//     document.getElementById(String(i)).childNodes[2].nodeValue = " 0 "
+//   }
 
-  for (let i = 0; i < 2; i++) {
-    for (let k = 0; k < 8; k++) {
-      craftedItems[i][k].style.backgroundImage = ""
-      craftedItems[i][k].value = ""
-    }
-  }
-
-}
+//   for (let i = 0; i < 2; i++) {
+//     for (let k = 0; k < 8; k++) {
+//       craftedItems[i][k].style.backgroundImage = ""
+//       craftedItems[i][k].value = ""
+//     }
+//   }
+// }
 
 function incrementtable(item, currInv, compItems, itemimages, baseitemimages) {
   setAllCraftable(baseitemimages[item])

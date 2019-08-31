@@ -50,25 +50,25 @@ hr{
     height: 23.4px;
 }
 
+#save-btn{
+    position: absolute;
+    cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 115px;
+    left: 100px;
+    width: 34.2px;
+    height: 23.4px;
+}
+
 #load-btn{
 	position: absolute;
 	cursor: pointer;
     -webkit-user-drag: none;
     -webkit-user-select: none;
     top: 115px;
-    left: 100px;
-    width: 36.6px;
-    height: 23.4px;
-}
-
-#save-btn{
-	position: absolute;
-	cursor: pointer;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    top: 115px;
     left: 160px;
-    width: 34.2px;
+    width: 36.6px;
     height: 23.4px;
 }
 
@@ -113,16 +113,13 @@ table#countertable{
     cursor: pointer;
     height: 11px;
     width: 11px;
+    position: 
 }
 .decrementbutton{
-    padding-right: 0px;
-    padding-left: 0;
     content: url("./assets/minus-button.png");
 }
 
 .incrementbutton{
-    padding-left: 0px;
-    padding-right: 0;
     content: url("./assets/add-button.png");
 }
 
