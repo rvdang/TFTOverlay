@@ -63,6 +63,8 @@ async function loadfilter(filterbtn=false) {
 			}
 		})
 		.catch(console.error)
+	} else {
+		filtername = "lastFilter"
 	}
 
 	console.log("Loaded: ", filtername)
@@ -106,6 +108,8 @@ async function savefilter(filterbtn=false) {
 			}
 		})
 		.catch(console.error)
+	} else {
+		filtername = "lastFilter"
 	}
 
 	let i = 0
@@ -123,7 +127,8 @@ async function savefilter(filterbtn=false) {
 
 	console.log("Saved: ", filtername)
 	fs.writeFileSync("./filters/" + filtername + ".txt", filter)
-	console.log("Saved filter: ", filter)
+	console.log("Saved filter: ", filter)	
+	
 }
 
 function reset() {
