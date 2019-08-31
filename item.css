@@ -1,6 +1,6 @@
 body {
     -webkit-user-select: none;
-    background-image: url("./assets/item-background.png");
+    background-image: url("./assets/minimized-items.png");
     background-repeat: no-repeat;
     width: 100%;
     height: 100%;
@@ -10,8 +10,8 @@ body {
 }
 
 .itemcounterimage{
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     -webkit-user-drag: none;
     -webkit-user-select: none;
 }
@@ -29,14 +29,47 @@ hr{
     border-color:  #E1C368;
 }
 
-#minimize-btn,#close-btn,#move-btn{
+#maximize-btn,#close-btn,#move-btn{
     position: absolute;
-    top: 0px;
-    height: 19px;
-    width: 19px;
+    top: 2px;
+    height: 16px;
+    width: 16px;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-user-select: none;
+}
+
+#filter-btn{
+	position: absolute;
+	cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 115px;
+    left: 40px;
+    width: 41.4px;
+    height: 23.4px;
+}
+
+#save-btn{
+    position: absolute;
+    cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 115px;
+    left: 100px;
+    width: 34.2px;
+    height: 23.4px;
+}
+
+#load-btn{
+	position: absolute;
+	cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 115px;
+    left: 160px;
+    width: 36.6px;
+    height: 23.4px;
 }
 
 #reset-btn{
@@ -44,15 +77,15 @@ hr{
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-user-select: none;
-    top: 545px;
-    right: 35px;
-    width: 36px;
-    height: 19px;
+    top: 428px;
+    left: 271px;
+    width: 34px;
+    height: 20px;
 }
 
-#minimize-btn{
+#maximize-btn{
     right: 30px;
-    content: url("./assets/minus.png");
+    content: url("./assets/plus.png");
 }
 
 #close-btn{
@@ -60,43 +93,41 @@ hr{
 }
 
 #move-btn{
-    right:430px;
+    left:4px;
+    right: 0;
     -webkit-app-region: drag;
     cursor: all-scroll;
 }
 table{
     padding: 0;
     margin: 0;
-    transform: translate(-1px, 0)
 }
 table#countertable{
-    left: 50%;
-    transform: translate(1px, 0);
-    border-spacing: 2px 0;
+    position:absolute;
+    left: 0px;
+    top: 25px;
+    border-spacing: 0px 0px;
 }
 
 .incrementbutton,.decrementbutton{
     cursor: pointer;
-    height: 15px;
-    widows: 15px;
+    height: 11px;
+    width: 11px;
+    position: 
 }
 .decrementbutton{
-    padding-right: 4px;
-    padding-left: 0;
     content: url("./assets/minus-button.png");
 }
 
 .incrementbutton{
-    padding-left: 4px;
-    padding-right: 0;
     content: url("./assets/add-button.png");
 }
 
 span{
     display: inline-block;
     color: white;
-    font-size: 14pt;
-    width: 50px;
+    font-size: 12pt;
+    width: 38px;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -110,75 +141,73 @@ td {
 }
 
 .itemtabledata{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 }
 
 td.itemtabledata{
-    height: 45px;
-    width: 45px;
+    height: 30px;
+    width: 30px;
     color: white;
     font-size: 16pt;
     text-align: center;
     background-image: url('');
     background-repeat: no-repeat;
-    background-size: 45px 45px;
+    background-size: 30px 30px;
     padding: 0px;
     text-align: center;
 }
 
 table#itemtable{
-    position: relative;
+    position: absolute;
     border-spacing: 0px 0px;
-    left: 50%;
-    transform: translate(-52%,0);
-    /* border-collapse: collapse; */
+    left: 31px;
+    top: 159px;
 }
 
 div#craftingdiv{
-    height: 120px;
-    width: 400px;
+    width: 333px;
+    height: 107px;
     background-image: url('./assets/crafteditem-background.png');
-    background-size: 400px 120px;
+    background-size: 333px 107px;
     text-align: center;
     background-repeat: no-repeat;
-    position: relative;
-    top: 22px;
-    left: 17px;
+    position: absolute;
+    top: 452px;
+    left: 23px;
 }
 
 table#craftedtable{
     position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 13px;
+    left: 14px;
     margin: 0;
     padding: 0;
     border-spacing: 7px;
 }
 
 .crafted{
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     background-image: url('');
     background-repeat: no-repeat;
-    background-size: 40px 40px;
+    background-size: 30px 30px;
     padding: 0px;
     text-align: center;
 }
 
 #crafted0,#crafted1{
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     padding: 0px;
 }
 
 #legend{
     position: absolute;
-    height: 144px;
-    width: 144px;
-    top: 380px;
-    right: 35px;
+    height: 128px;
+    width: 128px;
+    top: 293px;
+    left: 225px;
 }
 
 img{
